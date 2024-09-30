@@ -331,6 +331,7 @@ int RawModel::AddNode(const long id, const char* name, const long parentId, cons
   joint.rotation = Quatf(0, 0, 0, 1);
   joint.scale = Vec3f(1, 1, 1);
   joint.extraSkinIx = extraSkinIx;
+  joint.pivot = Vec3f(0, 0, 0);
 
   nodes.emplace_back(joint);
   return (int)nodes.size() - 1;
@@ -474,10 +475,10 @@ void RawModel::TransformGeometry(ComputeNormalsOption normals) {
       if (verboseOutput) {
         if (normals == ComputeNormalsOption::BROKEN) {
           if (computedNormalsCount > 0) {
-            fmt::printf("Repaired %lu empty normals.\n", computedNormalsCount);
+            fmt::fprintf(stderr, "Repaired %lu empty normals.\n", computedNormalsCount);
           }
         } else {
-          fmt::printf("Computed %lu normals.\n", computedNormalsCount);
+          fmt::fprintf(stderr, "Computed %lu normals.\n", computedNormalsCount);
         }
       }
       break;
